@@ -1,3 +1,5 @@
+#%%
+import matplotlib.pyplot as plt
 import numpy as np
 from numba import njit, prange
 
@@ -7,7 +9,7 @@ def gauss(x,sig,mu):
     return  a
 
 @njit
-def gauss2D(x,y, dx, dy, sx=.5, sy=.5):
+def gauss2D(x,y, dx, dy, sx=0.5, sy=0.5):
     x = gauss(x,sx,dx)
     y = gauss(y,sy,dy)
     
@@ -18,20 +20,23 @@ def gauss2D(x,y, dx, dy, sx=.5, sy=.5):
     return c
 
 @njit(parallel=True)
-def Shak(x_pos, y_pos, res_x, res_y):
+def Shak(x_pos, y_pos, res, im_range_x,im_range_y):
     # calculate range
-    xmin, xmax = getRange(x_pos[0,:])
-    ymin, ymax = getRange(y_pos[:,0])
-
-    x_array = np.linspace(xmin,xmax,res_x)
-    y_array = np.linspace(ymin,ymax,res_y)
-    a = np.zeros((res_x,res_y)) 
+    # x_canvis, y_canvis = getRange(x_pos[0,:])
+    # ymin, ymax = getRange(y_pos[:,0])
+    print(im_range_x,im_range_y)
+    x_array = np.linspace(im_range_x[0],im_range_x[1],res[0])
+    y_array = np.linspace(im_range_y[0],im_range_y[1],res[1])
+    a = np.zeros((res[0],res[1])) 
     
     x_pos = make1D(x_pos)
     y_pos = make1D(y_pos)
 
-    for i in prange(x_pos.shape[0]):
+    for i in range(x_pos.shape[0]):
         a += gauss2D(x_array,y_array,x_pos[i],y_pos[i])
+        #plt.imshow(b);plt.show()
+        #print("idx:", i,"x:", x_pos[i],"y", y_pos[i])
+
     return a
 
 @njit
@@ -44,3 +49,5 @@ def getRange(A,margin=0.2):
     Amax = np.max(A)+ (margin * A[-1] -A[0])
     return Amin, Amax
     
+
+# %%

@@ -7,3 +7,40 @@ Change swap:
 
 change hostname 
     sudo hostname -b NAME
+
+
+python install https://maker-tutorials.com/python3-pip-raspberry-pi-installieren/
+    sudo apt-get install -y build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev tar wget vim    
+
+alias python=python3.8
+alias python3=python3.8
+alias pip3=pip3.8
+alias pip=pip3.8
+
+
+lib camera install https://libcamera.org/getting-started.html
+    
+    sudo apt-get install g++ python3-yaml python3-ply python3-jinja2 clang libdw-dev libunwind-dev libboost-dev gnutls
+    
+    pip install jinja2
+    
+    uncouncommend line in buid meson file wicht checks for python distro... 
+
+
+
+
+install gnutls - shit for bild of libcam (https://stackoverflow.com/questions/52722096/build-emacs-and-gnutls-not-found/52722866)
+    apt-cache search 'libgnutls.*-dev'
+        is printing the name of the curretn build of gnutls, it was libgnutls28-dev in my case
+    
+    sudo apt-get install libgnutls28-dev
+
+
+#export PATH="$PATH:/home/pi/.local/bin"
+ninja install failuar
+    https://github.com/NixOS/nixpkgs/issues/18012
+
+
+#####
+reload bashrc 
+    source ~/.bashrc
