@@ -8,7 +8,7 @@ def gauss(x,sig,mu):
     a = (1/ np.sqrt(2 * np.pi * sig**2)) * np.exp(-((x - mu)**2) / (2 * sig**2))
     return  a
 
-@njit
+@njit(parallel=True)
 def gauss2D(x,y, dx, dy, sx=0.5, sy=0.5):
     x = gauss(x,sx,dx)
     y = gauss(y,sy,dy)

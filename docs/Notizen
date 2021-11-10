@@ -44,3 +44,5 @@ ninja install failuar
 #####
 reload bashrc 
     source ~/.bashrc
+
+
