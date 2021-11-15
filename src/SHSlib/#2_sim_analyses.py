@@ -89,7 +89,7 @@ for i in range(0,len(partner)):
 ax[0,1].set_title("Distordet Image")
 ax[1,0].imshow(img_1_sep, interpolation='none')
 
-
+# Plot ref and cur in on Image as "rgb" 
 clip_1 = (img_1_sep > 1).astype(int) * 255
 clip_2 = (img_2_sep > 1).astype(int) * 255
 
@@ -126,3 +126,4 @@ plt.hist(shift_distance,bins=100)
 plt.plot()
 plt.plot([x1,x2], [y1,y2])
 # %%
+

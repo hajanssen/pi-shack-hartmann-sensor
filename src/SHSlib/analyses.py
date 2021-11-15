@@ -37,7 +37,22 @@ def getMomentum(img,img_ori):
         x[i-2] = M[0, 1] / M[0, 0]
         y[i-2] = M[1, 0] / M[0, 0]
         
-        # fig,ax = plt.subplots(figsize=(4,4))
-        # ax.imshow(img_ori * mask, interpolation='none')
-        # ax.plot(x[i-1],y[i-1],"or")
     return x, y
+
+def getPartner  (img1_x,img1_y,img2_x,img2_y):
+    
+    # find coresponding points in images, by looking for clooses on s
+    partner = []
+    for i in range(0,len(img1_x)):
+        dis = np.zeros(len(img2_x))
+
+        x_shift = np.array((img1_x[i], img1_y[i]))
+        for j in range(0,len(img2_x)):
+            v2 = np.array((img2_x[j], img2_y[j]))
+            dis[j] = np.linalg.norm(x_shift - v2)
+        partner += [np.argmin(dis)]
+
+    x_shift = img2_x[partner] - img1_x
+    y_shift = img2_y[partner] - img1_y
+
+    return x_shift, y_shift

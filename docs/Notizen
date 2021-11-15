@@ -45,4 +45,5 @@ ninja install failuar
 reload bashrc 
     source ~/.bashrc
 
-
+# disabeld uart port for speedup in boot
+sudo systemctl disable hciuart
