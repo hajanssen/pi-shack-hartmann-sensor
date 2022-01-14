@@ -39,7 +39,7 @@ def getMomentum(img,img_ori):
         
     return x, y
 
-def getPartner  (img1_x,img1_y,img2_x,img2_y):
+def getPartner(img1_x,img1_y,img2_x,img2_y):
     
     # find coresponding points in images, by looking for clooses on s
     partner = []
