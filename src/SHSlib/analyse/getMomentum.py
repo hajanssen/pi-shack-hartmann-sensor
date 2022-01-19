@@ -1,4 +1,9 @@
+#def getMomentum(img,img_ori,algorythm="C_implementation" ):
+
+
+
 def getMomentum(img,img_ori):
+
     import numpy as np
     from skimage import measure
 
