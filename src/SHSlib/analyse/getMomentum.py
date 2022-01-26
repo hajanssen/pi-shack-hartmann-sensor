@@ -1,8 +1,57 @@
-#def getMomentum(img,img_ori,algorythm="C_implementation" ):
+
+
+# Import Clib if present
+import sys 
+import os
+import pathlib
+curretn_folder = str(pathlib.Path(__file__).parent.resolve())
+files = os.listdir(curretn_folder)
+
+# check if system is linux and  
+#       if a sheard libray of the lib is in current path
+Clib_is_present = False
+
+if sys.platform.startswith('linux') and any(x=="Clib.so" for x in files):
+    from ctypes import CDLL, POINTER, c_double
+    import ctypes as c
+    import numpy as np
+    # C-type corresponding to numpy array 
+    Clib = CDLL(curretn_folder + "/Clib.so")
+    
+    ND_POINTER_uint = np.ctypeslib.ndpointer(dtype=np.uintc, 
+                                        ndim=1,
+                                        flags="C")
+
+    ND_POINTER_double = np.ctypeslib.ndpointer(dtype=np.float64, 
+                                        ndim=1,
+                                        flags="C")
+
+    Clib.getMomentum.argtypes = [ND_POINTER_uint, c.c_size_t,
+                                    ND_POINTER_uint, c.c_size_t,
+                                    ND_POINTER_uint, c.c_size_t,
+                                    ND_POINTER_uint, c.c_size_t,
+                                    ND_POINTER_double, c.c_size_t,
+                                    ND_POINTER_double, c.c_size_t]
+
+    Clib.getMomentum.restype = None
+    Clib_is_present = True
+
+ 
+
+def getMomentum(img,img_ori,algorythm="C"):
+    if algorythm == "C" and Clib_is_present:
+
+
+        print("Clib is goint to be used")
+    if algorythm == "skimage":
+        return getMomentum_skimage(img,img_ori)
+    if algorythm == "CV":
+        return getMomentum_CV(img,img_ori)
+    
 
 
 
-def getMomentum(img,img_ori):
+def getMomentum_skimage(img,img_ori):
 
     import numpy as np
     from skimage import measure
@@ -18,3 +67,23 @@ def getMomentum(img,img_ori):
         y[i-2] = M[1, 0] / M[0, 0]
         
     return x, y
+
+def getMomentum_CV(img_lables_in,img_ori):
+    from cv2 import moments
+    import numpy as np
+    img_lables = np.copy(img_lables_in) + 1
+
+    x = np.zeros(np.max(img_lables)-1)
+    y = np.zeros(np.max(img_lables)-1)
+    
+    # [note] this loop could be paralised
+    for i in range(2,np.max(img_lables)+1):
+        mask = img_lables != i
+        img_slice = np.copy(img_ori).astype(np.uint8)
+        img_slice[mask] = 0 
+    
+        M = moments(img_slice)
+        x[i-2] = M["m01"] / M["m00"]
+        y[i-2] = M["m10"] / M["m00"]
+
+    return y, x

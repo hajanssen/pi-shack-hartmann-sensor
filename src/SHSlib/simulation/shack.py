@@ -1,4 +1,4 @@
-def shak(x_pos, y_pos, res, im_range_x,im_range_y):
+def shack(x_pos, y_pos, res, im_range_x,im_range_y):
     import numpy as np
     from ..simulation import gauss2D 
     from ..simulation import make1D 
