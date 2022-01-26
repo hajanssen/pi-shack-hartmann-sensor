@@ -1,9 +1,13 @@
 
 
 # Import Clib if present
-import sys 
+
+from distutils.log import error
 import os
 import pathlib
+import sys 
+# from numpy import size
+# from sympy import E
 curretn_folder = str(pathlib.Path(__file__).parent.resolve())
 files = os.listdir(curretn_folder)
 
@@ -38,15 +42,50 @@ if sys.platform.startswith('linux') and any(x=="Clib.so" for x in files):
 
  
 
-def getMomentum(img,img_ori,algorythm="C"):
-    if algorythm == "C" and Clib_is_present:
-
-
+def getMomentum(img_lables,img_sensor,algorythm="C"):
+     
+    if algorythm == "C" and Clib_is_present and sys.platform.startswith('linux'):
         print("Clib is goint to be used")
-    if algorythm == "skimage":
-        return getMomentum_skimage(img,img_ori)
+        x_len = np.shape(img_lables)[0]
+        y_len = np.shape(img_lables)[1]
+
+        X = np.arange(x_len)[np.newaxis].T @ np.ones(y_len)[np.newaxis]
+        Y = (np.arange(y_len)[np.newaxis].T @ np.ones(x_len)[np.newaxis]).T
+
+        x1 = X**1
+        y1 = Y**1
+
+        x1_1d = np.uintc(x1.ravel())
+        y1_1d = np.uintc(y1.ravel())
+
+        k = img_lables.max()
+        Xpos = np.zeros(k)
+        Ypos = np.zeros(k)
+
+        img_sensor = np.uintc(img_sensor.ravel())
+        img_lables = np.uintc(img_lables.ravel())
+        print(img_sensor[0:800])
+        print(img_lables[0:800])
+
+        Clib.getMomentum(img_sensor, img_sensor.size,
+                         img_lables, img_lables.size,
+                         x1_1d, x1_1d.size,
+                         y1_1d, y1_1d.size,
+                         Xpos, Xpos.size,
+                         Ypos, Ypos.size )
+    
+    else:
+        algorythm = "CV"
+
     if algorythm == "CV":
-        return getMomentum_CV(img,img_ori)
+        return getMomentum_CV(img_lables,img_sensor)
+    else:
+        algorythm = "skimage"
+
+    if algorythm == "skimage":
+        return getMomentum_skimage(img_lables,img_sensor)
+    else:
+        error("no valid algorythm found, install openCV or skimage")
     
 
 

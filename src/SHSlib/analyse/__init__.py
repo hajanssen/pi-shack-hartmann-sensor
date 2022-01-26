@@ -1,7 +1,3 @@
-from .getMomentum import getMomentum 
-from .getPartner import getPartner
-from .getSeperation import getSeperation
-
 
 
 def build_Clib(lib_name):
@@ -23,10 +19,15 @@ def build_Clib(lib_name):
         if not any(x==lib_name +".so" for x in files):
             print("rebilding sheard c libray, because it was not flound ")
             import subprocess as bash 
+            # Bulid_Command = ["gcc", "-Wall", "-pedantic", 
+            #             "-shared","-fpic", "-O3","-o" ,
+            #             str(curretn_folder) + "/"+ lib_name + ".so", 
+            #             str(curretn_folder) + "/"+ lib_name + ".c" ]   
             Bulid_Command = ["gcc", "-Wall", "-pedantic", 
-                        "-shared","-fpic", "-O3","-o" ,
+                        "-shared","-fpic","-o" ,
                         str(curretn_folder) + "/"+ lib_name + ".so", 
                         str(curretn_folder) + "/"+ lib_name + ".c" ]   
+                        
             try:
                 bash.run(Bulid_Command)
                 build_succesful = True  
@@ -36,3 +37,8 @@ def build_Clib(lib_name):
 # import of C file
 
 build_Clib("Clib")
+
+from .getMomentum import getMomentum 
+from .getPartner import getPartner
+from .getSeperation import getSeperation
+

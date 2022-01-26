@@ -37,8 +37,11 @@ img2 =  uint8(image2)
 # calculate reference
 img_lables = sh.analyse.getSeperation(img)
 plt.imshow(img_lables)
+plt.show()
 
-x_ref,y_ref = sh.analyse.getMomentum(img_lables, img)
+x_ref,y_ref = sh.analyse.getMomentum(img_lables, img,algorythm="CV")
+print(x_ref,y_ref)
+
 plt.plot(x_ref,y_ref,"ro")
 plt.show()
 # %%

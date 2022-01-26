@@ -6,7 +6,7 @@ def shack(x_pos, y_pos, res, im_range_x,im_range_y):
     # calculate range
     # x_canvis, y_canvis = getRange(x_pos[0,:])
     # ymin, ymax = getRange(y_pos[:,0])
-    print(im_range_x,im_range_y)
+    #print(im_range_x,im_range_y)
     x_array = np.linspace(im_range_x[0],im_range_x[1],res[0])
     y_array = np.linspace(im_range_y[0],im_range_y[1],res[1])
     a = np.zeros((res[0],res[1])) 
