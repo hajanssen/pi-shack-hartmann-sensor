@@ -64,16 +64,14 @@ def getMomentum(img_lables,img_sensor,algorythm="C"):
 
         img_sensor = np.uintc(img_sensor.ravel())
         img_lables = np.uintc(img_lables.ravel())
-        print(img_sensor[0:800])
-        print(img_lables[0:800])
-
+   
         Clib.getMomentum(img_sensor, img_sensor.size,
                          img_lables, img_lables.size,
                          x1_1d, x1_1d.size,
                          y1_1d, y1_1d.size,
                          Xpos, Xpos.size,
                          Ypos, Ypos.size )
-    
+        return Xpos, Ypos
     else:
         algorythm = "CV"
 
