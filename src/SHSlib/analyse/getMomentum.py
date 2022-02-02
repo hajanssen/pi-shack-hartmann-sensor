@@ -41,7 +41,11 @@ if sys.platform.startswith('linux') and any(x=="Clib.so" for x in files):
 
 
 def getMomentum(img_lables,img_sensor,algorythm="C"):
-     
+    
+    
+    if isinstance(img_lables, float):
+        return np.NaN
+    
     if algorythm == "C" and Clib_is_present and sys.platform.startswith('linux'):
         #img_lables = img_lables + 1
         x_len = np.shape(img_lables)[0]
@@ -65,7 +69,13 @@ def getMomentum(img_lables,img_sensor,algorythm="C"):
         img_lables = np.uintc(img_lables.ravel())
    
         Clib.getMomentum(img_sensor, img_sensor.size,img_lables, img_lables.size,x1_1d, x1_1d.size,y1_1d, y1_1d.size,Xpos, Xpos.size,Ypos, Ypos.size )
-        return Xpos, Ypos
+        
+        ## bad mittigatoin of unintentinal NaN in data
+        
+        Xpos = Xpos[~np.isnan(Xpos)]
+        Ypos = Ypos[~np.isnan(Ypos)]
+        
+        return (Xpos, Ypos)
     else:
         algorythm = "CV"
 

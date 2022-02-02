@@ -1,6 +1,16 @@
-def getPartner(img1_x,img1_y,img2_x,img2_y):
-    import numpy as np
 
+def getPartner(img1_center,img2_center):
+#def getPartner(img1_x,img1_y,img2_x,img2_y):
+    import numpy as np
+    
+    if isinstance(img1_center, float):
+        return np.NaN
+    
+    img1_x = img1_center[0]
+    img1_y = img1_center[1]
+    img2_x = img2_center[0]
+    img2_y = img2_center[1 ]
+    
     # find coresponding points in images, by looking for clooses on s
     partner = []
     for i in range(0,len(img1_x)):
@@ -15,4 +25,4 @@ def getPartner(img1_x,img1_y,img2_x,img2_y):
     x_shift = img2_x[partner] - img1_x
     y_shift = img2_y[partner] - img1_y
 
-    return x_shift, y_shift
+    return (x_shift, y_shift)
