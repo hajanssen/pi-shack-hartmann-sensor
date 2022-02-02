@@ -1,5 +1,3 @@
-
-
 # Import Clib if present
 
 from distutils.log import error
@@ -40,12 +38,12 @@ if sys.platform.startswith('linux') and any(x=="Clib.so" for x in files):
     Clib.getMomentum.restype = None
     Clib_is_present = True
 
- 
+
 
 def getMomentum(img_lables,img_sensor,algorythm="C"):
      
     if algorythm == "C" and Clib_is_present and sys.platform.startswith('linux'):
-        print("Clib is goint to be used")
+        #img_lables = img_lables + 1
         x_len = np.shape(img_lables)[0]
         y_len = np.shape(img_lables)[1]
 
@@ -58,19 +56,15 @@ def getMomentum(img_lables,img_sensor,algorythm="C"):
         x1_1d = np.uintc(x1.ravel())
         y1_1d = np.uintc(y1.ravel())
 
-        k = img_lables.max()
+        k = img_lables.max()+1
         Xpos = np.zeros(k)
         Ypos = np.zeros(k)
 
+        
         img_sensor = np.uintc(img_sensor.ravel())
         img_lables = np.uintc(img_lables.ravel())
    
-        Clib.getMomentum(img_sensor, img_sensor.size,
-                         img_lables, img_lables.size,
-                         x1_1d, x1_1d.size,
-                         y1_1d, y1_1d.size,
-                         Xpos, Xpos.size,
-                         Ypos, Ypos.size )
+        Clib.getMomentum(img_sensor, img_sensor.size,img_lables, img_lables.size,x1_1d, x1_1d.size,y1_1d, y1_1d.size,Xpos, Xpos.size,Ypos, Ypos.size )
         return Xpos, Ypos
     else:
         algorythm = "CV"

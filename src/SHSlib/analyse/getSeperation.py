@@ -18,7 +18,7 @@ def getSeperation_CV(img):
     from skimage.feature import peak_local_max as peak
     
     # get peak position of spots
-    spots = peak(img, min_distance=10)
+    spots = peak(img, min_distance=80)
 
     # reshap peak point in x- and y-array
     x_pos = np.array([x[0] for x in spots])
@@ -26,6 +26,8 @@ def getSeperation_CV(img):
 
     #make image with "1" as peak, evrsthin els "0"
     img_mask = np.zeros_like(img, dtype=np.uint8)
+    if not x_pos and not y_pos
+        return np.nan
     img_mask[x_pos,y_pos] = 1
     
     n, expanded =  distanceTransformWithLabels(np.uint8(img_mask == 0), DIST_L2,3)
