@@ -1,24 +1,24 @@
 
-def getSeperation(img,algorythm="CV"):
+def getSeperation(img,algorythm="CV",min_distance=50):
     
     
     
     if algorythm == "CV": 
-        return getSeperation_CV(img)
+        return getSeperation_CV(img,min_distance=min_distance)
     if algorythm == "skimage2": 
-        return getSeperation_skimage2(img)
+        return getSeperation_skimage2(img,min_distance=min_distance)
     if algorythm == "skimage2": 
-        return getSeperation_skimage(img)
+        return getSeperation_skimage(img,min_distance=min_distance)
 
 
 
-def getSeperation_CV(img):
+def getSeperation_CV(img,min_distance):
     import numpy as np
     from cv2 import distanceTransformWithLabels, DIST_L2
     from skimage.feature import peak_local_max as peak
     # get peak position of spots
-    spots = peak(img, min_distance=80)
-    print(spots)
+    spots = peak(img, min_distance=min_distance)
+    #print(spots)
     if 0 > spots.size:
         print("incorrect input to seperation")
         return np.nan
@@ -36,7 +36,7 @@ def getSeperation_CV(img):
     n, expanded =  distanceTransformWithLabels(np.uint8(img_mask == 0), DIST_L2,3)
     return expanded
 
-def getSeperation_skimage2(img):
+def getSeperation_skimage2(img,min_distance):
     from skimage.measure import label
     from skimage.feature import peak_local_max as peak
     from skimage.segmentation import expand_labels
@@ -56,10 +56,10 @@ def getSeperation_skimage2(img):
     
     # [note] function uses very slow eucleadian distance implementatoin
     # cv has very fast one 
-    expanded = expand_labels(seg1, distance=100)
+    expanded = expand_labels(seg1, distance=min_distance)
     return expanded
 
-def getSeperation_skimage(img_ori,invert=False):
+def getSeperation_skimage(img_ori,min_distance,invert=False):
     import numpy as np
     from skimage import measure, feature, segmentation
 
@@ -80,6 +80,6 @@ def getSeperation_skimage(img_ori,invert=False):
     # labeling of elements (maybe unnecessary)
     label = measure.label(segments)
     # expension doesn't work, i guess 
-    sections = segmentation.expand_labels(label, distance=30)
+    sections = segmentation.expand_labels(label, distance=min_distance)
 
     return sections#, img_ori
