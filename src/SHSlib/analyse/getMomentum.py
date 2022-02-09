@@ -38,7 +38,20 @@ if sys.platform.startswith('linux') and any(x=="Clib.so" for x in files):
     Clib.getMomentum.restype = None
     Clib_is_present = True
 
-
+#def __init__(self):
+class getMomentumCLibInterface():
+    import numpy as np
+    def __init__(self):
+        self.x1_1d = np.array(())
+        self.y1_1d = np.array(())
+        
+        
+    def run(self,img_lable,img_sensor):
+        print("run")
+        
+        
+CLibInterface = getMomentumCLibInterface()
+    
 
 def getMomentum(img_lables,img_sensor,algorythm="C"):
     
