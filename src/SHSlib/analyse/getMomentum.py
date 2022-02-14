@@ -53,7 +53,12 @@ class getMomentumCLibInterface():
 CLibInterface = getMomentumCLibInterface()
     
 
-def getMomentum(img_lables,img_sensor,algorythm="C"):
+def getMomentum(img_lables,img_sensor,algorythm="C",gauss_filter=0 ):
+    
+    if gauss_filter != 0:
+        import cv2 as cv   
+        img_sensor = cv.GaussianBlur(img_sensor,(5,5),cv.BORDER_DEFAULT)
+        
     
     
     if isinstance(img_lables, float):
