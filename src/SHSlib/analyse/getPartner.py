@@ -22,7 +22,7 @@ def getPartner(img1_center,img2_center):
             dis[j] = np.linalg.norm(x_shift - v2)
         partner += [np.argmin(dis)]
 
-    x_shift = img2_x[partner] - img1_x
-    y_shift = img2_y[partner] - img1_y
-
-    return (x_shift, y_shift)
+    dx = img2_x[partner] - img1_x
+    dy = img2_y[partner] - img1_y
+    
+    return (dx, dy)
