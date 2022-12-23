@@ -160,8 +160,8 @@ class Processor():
     def loadFile(self,filePfad,refIndex= 0):
         # load file into python worksapce
         from pathlib import Path
-        fileExtension = Path(filePfad).suffixes[]
-        print(fileExtension)
+        fileExtension = Path(filePfad).suffixes[0]
+        
         if fileExtension == ".picke":
             self.loadedImages = self.readPickel(filePfad)
         elif fileExtension == ".hdf5":
