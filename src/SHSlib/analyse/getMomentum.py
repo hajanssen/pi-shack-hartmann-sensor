@@ -5,6 +5,7 @@ import os
 import pathlib
 import sys 
 # from numpy import size
+import numpy as np
 # from sympy import E
 curretn_folder = str(pathlib.Path(__file__).parent.resolve())
 files = os.listdir(curretn_folder)

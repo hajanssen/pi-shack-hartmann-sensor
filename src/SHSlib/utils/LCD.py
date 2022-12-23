@@ -1,5 +1,4 @@
 
-import time
 
 # /*****************************************************************************
 # * | File        :	  epdconfig.py
@@ -30,16 +29,21 @@ import time
 # THE SOFTWARE.
 #
 
-import os
-import sys
-import time
-import spidev
-import logging
-import numpy as np
 
 class RaspberryPi:
+
     def __init__(self,spi=spidev.SpiDev(0,0),spi_freq=40000000,rst = 27,dc = 25,bl = 18,bl_freq=1000,i2c=None,i2c_freq=100000):
-        import RPi.GPIO      
+        import RPi.GPIO
+        import os
+        import sys
+        import time
+        import spidev
+        import logging
+        import numpy as np
+        import time
+
+
+
         self.np=np
         self.RST_PIN= rst
         self.DC_PIN = dc
@@ -116,6 +120,13 @@ for func in [x for x in dir(implementation) if not x.startswith('_')]:
 
 
 class LCD(RaspberryPi):
+    import os
+    import sys
+    import time
+    import spidev
+    import logging
+    import numpy as np
+    import time
 
     width = 240
     height = 320 

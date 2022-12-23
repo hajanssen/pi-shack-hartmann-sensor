@@ -9,7 +9,7 @@ def getPartner(img1_center,img2_center):
     img1_x = img1_center[0]
     img1_y = img1_center[1]
     img2_x = img2_center[0]
-    img2_y = img2_center[1 ]
+    img2_y = img2_center[1]
     
     # find coresponding points in images, by looking for clooses on s
     partner = []
@@ -22,7 +22,7 @@ def getPartner(img1_center,img2_center):
             dis[j] = np.linalg.norm(x_shift - v2)
         partner += [np.argmin(dis)]
 
-    dx = img2_x[partner] - img1_x
-    dy = img2_y[partner] - img1_y
-    
+    dx = img1_x - img2_x[partner]
+    dy =  img1_y - img2_y[partner]
+     
     return (dx, dy)
