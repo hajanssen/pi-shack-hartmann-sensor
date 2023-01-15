@@ -172,7 +172,7 @@ class Processor:
 
         fileExtension = Path(filePfad).suffixes[0]
 
-        if fileExtension == ".picke":
+        if fileExtension == ".pickle":
             self.loadedImages = self.readPickel(filePfad)
         elif fileExtension == ".hdf5":
             self.loadedImages = self.readHdf5(filePfad)
@@ -226,15 +226,11 @@ class Processor:
 
         # loop over Number of Zernike Polynom
         for modelIndx in range(self.NZernike):
-            ModeValues = Coefficients[modelIndx] * self.ZernikeFunctions[modelIndx](
-                self.refCentroids[0], self.refCentroids[1]
-            )
+            ModeValues = Coefficients[modelIndx] * self.ZernikeFunctions[modelIndx](self.refCentroids[0], self.refCentroids[1])
             singeWavefrontComponent = np.zeros_like(self.refLabels, dtype=np.double())
 
             for CentroidIndex in range(len(self.refCentroids[1])):
-                singeWavefrontComponent[
-                    self.refLabels == CentroidIndex + 1
-                ] = ModeValues[CentroidIndex]
+                singeWavefrontComponent[self.refLabels == CentroidIndex + 1] = ModeValues[CentroidIndex]
 
             WavefrontComponents += [singeWavefrontComponent]
             Wavefront += singeWavefrontComponent

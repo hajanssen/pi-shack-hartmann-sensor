@@ -1,4 +1,4 @@
-def getIntegration(Xn, Yn, Xpos, Ypos, NPartner=10):
+def getIntegration(Xn, Yn, Xpos, Ypos, NPartner=5):
     # Paramether
     # Xn : X-Position for integration point
     # Yn : Y-Position for integration point
